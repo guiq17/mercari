@@ -33,7 +33,7 @@
             <form action="" class="form-inline" role="form">
                 @csrf
                 <div class="form-group">
-                    <input type="input" class="form-control" id="name" placeholder="item name">
+                    <input type="input" class="form-control" id="name" placeholder="item name" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <i class="fa fa-plus"></i>
@@ -41,19 +41,28 @@
                 <div class="form-group">
                     <select name="" id="" class="form-control">
                         <option value="">- parentCategory -</option>
+                        @foreach ($firstCategories as $category)
+                            <option value="{{ $category }}">{{ $category }}</option>
+                        @endforeach
                     </select>
                     <select name="" id="" class="form-control">
                         <option value="">- childCategory -</option>
+                        @foreach ($secondCategories as $category)
+                            <option value="{{ $category }}">{{ $category }}</option>
+                        @endforeach
                     </select>
                     <select name="" id="" class="form-control">
                         <option value="">- grandChild -</option>
+                        @foreach ($thirdCategories as $category)
+                            <option value="{{ $category }}">{{ $category }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <i class="fa fa-plus"></i>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="brand">
+                    <input type="text" class="form-control" placeholder="brand" autocomplete="off">
                 </div>
                 <div class="form-group"></div>
                 <button type="submit" class="btn btn-default">search</button>

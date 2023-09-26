@@ -21,6 +21,11 @@ class ItemsController extends Controller
                 'thirdCategory' => $categoryName[2],
             ];
         }
-        return view('items.list', compact('items', 'categories'));
+
+        $firstCategories = Category::where('parent_id', null)->pluck('name');
+        $secondCategories = Category::where('parent_id', '!=', null)->where('name_all', '=', null)->pluck('name');
+        $thirdCategories = Category::where('name_all', '!=', null)->pluck('name');
+
+        return view('items.list', compact('items', 'categories', 'firstCategories', 'secondCategories', 'thirdCategories'));
     }
 }
