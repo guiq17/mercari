@@ -11,18 +11,30 @@ class ItemsController extends Controller
     // 一覧画面＆検索機能
     public function list(Request $request)
     {
-        $keyword = $request->input('keyword');
-        $firstCategory = $request->input('firstCategory');
-        $secondCategory = $request->input('secondCategory');
-        $thirdCategory = $request->input('thirdCategory');
-        $brandKeyword = $request->input('brandKeyword');
+        // セッションに絞り込み条件を保存
+        session(['keyword' => $request->input('keyword')]);
+        session(['firstCategory' => $request->input('firstCategory')]);
+        session(['secondCategory' => $request->input('secondCategory')]);
+        session(['thirdCategory' => $request->input('thirdCategory')]);
+        session(['brandKeyword' => $request->input('brandKeyword')]);
+
+        // セッションから絞り込み条件を取得
+        $keyword = session('keyword', '');
+        $firstCategory = session('firstCategory', '');
+        $secondCategory = session('secondCategory', '');
+        $thirdCategory = session('thirdCategory', '');
+        $brandKeyword = session('brandKeyword', '');
 
         $query = Item::query();
 
-        // キーワード検索
+        // キーワード検索(条件をクエリに適用)
         if(!empty($keyword))
         {
             $query->where('name', 'like', '%'.$keyword.'%');
+        }
+        if(!empty($brandKeyword))
+        {
+            $query->where('brand', 'like', '%'.$brandKeyword.'%');
         }
 
         // カテゴリー検索
