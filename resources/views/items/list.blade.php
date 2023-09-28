@@ -6,7 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{{ asset('css/mercari.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/list.css') }}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
 </head>
 <body>
     {{-- navbar --}}
@@ -30,31 +35,34 @@
         </div>
         {{-- 検索フォーム --}}
         <div id="forms">
-            <form action="" class="form-inline" role="form">
+            <form action="{{ route('item.list') }}" class="form-inline" role="form" method="GET">
                 @csrf
                 <div class="form-group">
-                    <input type="input" class="form-control" id="name" placeholder="item name" autocomplete="off">
+                    <input type="input" class="form-control" id="name" placeholder="item name" autocomplete="off" name="keyword" value="{{ $keyword }}">
                 </div>
                 <div class="form-group">
                     <i class="fa fa-plus"></i>
                 </div>
                 <div class="form-group">
-                    <select name="" id="" class="form-control">
-                        <option value="">- parentCategory -</option>
-                        @foreach ($firstCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
+                    {{-- firstCategoryのプルダウンボックス --}}
+                    <select name="firstCategory" id="firstCategory" class="form-control">
+                        <option value="">- firstCategory -</option>
+                        @foreach ($firstCategories as $firstCategory)
+                            <option value="{{ $firstCategory }}">{{ $firstCategory }}</option>
                         @endforeach
                     </select>
-                    <select name="" id="" class="form-control">
-                        <option value="">- childCategory -</option>
-                        @foreach ($secondCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
+                    {{-- secondCategoryのプルダウンボックス --}}
+                    <select name="secondCategory" id="secondCategory" class="form-control">
+                        <option value="">- secondCategory -</option>
+                        @foreach ($secondCategories as $secondCategory)
+                            <option value="{{ $secondCategory }}">{{ $secondCategory }}</option>
                         @endforeach
                     </select>
-                    <select name="" id="" class="form-control">
-                        <option value="">- grandChild -</option>
-                        @foreach ($thirdCategories as $category)
-                            <option value="{{ $category }}">{{ $category }}</option>
+                    {{-- thirdCategoryのプルダウンボックス --}}
+                    <select name="thirdCategory" id="thirdCategory" class="form-control">
+                        <option value="">- thirdCategory -</option>
+                        @foreach ($thirdCategories as $thirdCategory)
+                            <option value="{{ $thirdCategory }}">{{ $thirdCategory }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -62,24 +70,11 @@
                     <i class="fa fa-plus"></i>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="brand" autocomplete="off">
+                    <input type="text" class="form-control" placeholder="brand" autocomplete="off" name="brandKeyword" value="{{ $brandKeyword }}">
                 </div>
                 <div class="form-group"></div>
                 <button type="submit" class="btn btn-default">search</button>
             </form>
-        </div>
-        {{-- pagination --}}
-        <div class="pages">
-            <nav class="page-nav">
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="#">← prev</a>
-                    </li>
-                    <li class="next">
-                        <a href="#">next →</a>
-                    </li>
-                </ul>
-            </nav>
         </div>
         {{-- table --}}
         <div class="table-responsive">
@@ -103,11 +98,11 @@
                             {{ $item->price }}
                         </td>
                         <td class="item-category">
-                            <a href="">{{ $categories[$index]['firstCategory'] }}</a>
+                            <a href="">{{ isset($categories[$index]['firstCategory']) ? $categories[$index]['firstCategory'] : '' }}</a>
                             /
-                            <a href="">{{ $categories[$index]['secondCategory'] }}</a>
+                            <a href="">{{ isset($categories[$index]['secondCategory']) ? $categories[$index]['secondCategory'] : '' }}</a>
                             /
-                            <a href="">{{ $categories[$index]['thirdCategory'] }}</a>
+                            <a href="">{{ isset($categories[$index]['thirdCategory']) ? $categories[$index]['thirdCategory'] : '' }}</a>
                         </td>
                         <td class="item-brand">
                             <a href="">{{ $item->brand }}</a>
@@ -122,16 +117,6 @@
         </div>
         {{-- pagination --}}
         <div class="pages">
-            <nav class="page-nav">
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="#">← prev</a>
-                    </li>
-                    <li class="next">
-                        <a href="#">next →</a>
-                    </li>
-                </ul>
-            </nav>
             {{-- ページ番号を検索して表示するフォーム --}}
             <div id="select-page">
                 <form action="" class="form-inline">
@@ -151,5 +136,6 @@
         </div>
         {{ $items->links() }}
     </div>
+    <script src="{{ asset('js/getCategory.js') }}"></script>
 </body>
 </html>
