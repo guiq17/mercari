@@ -18,4 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/list', [ItemsController::class, 'list'])->name('item.list');
+Route::middleware(['web'])->group(function(){
+    Route::get('/list', [ItemsController::class, 'list'])->name('item.list');
+    Route::get('/getSecondCategories', [ItemsController::class, 'getSecondCategories']);
+});

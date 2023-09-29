@@ -36,7 +36,7 @@
         {{-- 検索フォーム --}}
         <div id="forms">
             <form action="{{ route('item.list') }}" class="form-inline" role="form" method="GET">
-                @csrf
+                {{-- @csrf --}}
                 <div class="form-group">
                     <input type="input" class="form-control" id="name" placeholder="item name" autocomplete="off" name="keyword" value="{{ $keyword }}">
                 </div>
@@ -48,21 +48,21 @@
                     <select name="firstCategory" id="firstCategory" class="form-control">
                         <option value="">- firstCategory -</option>
                         @foreach ($firstCategories as $firstCategory)
-                            <option value="{{ $firstCategory }}">{{ $firstCategory }}</option>
+                            <option value="{{ $firstCategory->id }}">{{ $firstCategory->name }}</option>
                         @endforeach
                     </select>
                     {{-- secondCategoryのプルダウンボックス --}}
                     <select name="secondCategory" id="secondCategory" class="form-control">
                         <option value="">- secondCategory -</option>
                         @foreach ($secondCategories as $secondCategory)
-                            <option value="{{ $secondCategory }}">{{ $secondCategory }}</option>
+                            <option value="{{ $secondCategory->id }}">{{ $secondCategory->name }}</option>
                         @endforeach
                     </select>
                     {{-- thirdCategoryのプルダウンボックス --}}
                     <select name="thirdCategory" id="thirdCategory" class="form-control">
                         <option value="">- thirdCategory -</option>
                         @foreach ($thirdCategories as $thirdCategory)
-                            <option value="{{ $thirdCategory }}">{{ $thirdCategory }}</option>
+                            <option value="{{ $thirdCategory->id }}">{{ $thirdCategory->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -134,8 +134,9 @@
                 </form>
             </div>
         </div>
-        {{ $items->links() }}
+        {{ $items->appends(request()->query())->links() }}
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/getCategory.js') }}"></script>
 </body>
 </html>

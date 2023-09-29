@@ -11,19 +11,11 @@ class ItemsController extends Controller
     // 一覧画面＆検索機能
     public function list(Request $request)
     {
-        // セッションに絞り込み条件を保存
-        session(['keyword' => $request->input('keyword')]);
-        session(['firstCategory' => $request->input('firstCategory')]);
-        session(['secondCategory' => $request->input('secondCategory')]);
-        session(['thirdCategory' => $request->input('thirdCategory')]);
-        session(['brandKeyword' => $request->input('brandKeyword')]);
-
-        // セッションから絞り込み条件を取得
-        $keyword = session('keyword', '');
-        $firstCategory = session('firstCategory', '');
-        $secondCategory = session('secondCategory', '');
-        $thirdCategory = session('thirdCategory', '');
-        $brandKeyword = session('brandKeyword', '');
+        $keyword = $request->input('keyword');
+        $firstCategory = $request->input('firstCategory');
+        $secondCategory = $request->input('secondCategory');
+        $thirdCategory = $request->input('thirdCategory');
+        $brandKeyword = $request->input('brandKeyword');
 
         $query = Item::query();
 
@@ -74,9 +66,9 @@ class ItemsController extends Controller
             }
         }
 
-        $firstCategories = Category::where('parent_id', null)->pluck('name');
-        $secondCategories = Category::where('parent_id', '!=', null)->where('name_all', '=', null)->pluck('name');
-        $thirdCategories = Category::where('name_all', '!=', null)->pluck('name');
+        $firstCategories = Category::where('parent_id', null)->get();
+        $secondCategories = Category::where('parent_id', '!=', null)->where('name_all', '=', null)->get();
+        $thirdCategories = Category::where('name_all', '!=', null)->get();
 
         return view('items.list', compact('items', 'categories', 'firstCategories', 'secondCategories', 'thirdCategories', 'keyword', 'firstCategory', 'secondCategory', 'thirdCategory', 'brandKeyword'));
     }
@@ -84,11 +76,14 @@ class ItemsController extends Controller
     public function getSecondCategories(Request $request)
     {
         $selectedCategory = $request->input('firstCategory');
+        dd($selectedCategory);
 
         // 選択されたfirstCategoryに紐づくsecondCategoryを取得
-        $secondCategories = Category::where('parent_id', $selectedCategory)->pluck('name', 'id');
+        $secondCategories = Category::where('parent_id', $selectedCategory)->pluck('name')->toArray();
+        dd($secondCategories);
 
-        // JSON形式でsecondCategoryを返す
-        return response()->json($secondCategories);
+        return response()->json([
+            'secondCategories' => $secondCategories,
+        ]);
     }
 }
