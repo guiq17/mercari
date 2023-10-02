@@ -76,14 +76,24 @@ class ItemsController extends Controller
     public function getSecondCategories(Request $request)
     {
         $selectedCategory = $request->input('firstCategory');
-        dd($selectedCategory);
 
         // 選択されたfirstCategoryに紐づくsecondCategoryを取得
         $secondCategories = Category::where('parent_id', $selectedCategory)->pluck('name')->toArray();
-        dd($secondCategories);
 
         return response()->json([
             'secondCategories' => $secondCategories,
+        ]);
+    }
+
+    public function getThirdCategories(Request $request)
+    {
+        $selectedCategory = $request->input('secondCategory');
+
+        // 選択されたsecondCategoryに紐づくthirdCategoryを取得
+        $thirdCategories = Category::where('parent_id', $selectedCategory)->pluck('name')->toArray();
+
+        return response()->json([
+            'thirdCategories' => $thirdCategories,
         ]);
     }
 }

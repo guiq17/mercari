@@ -36,7 +36,6 @@
         {{-- 検索フォーム --}}
         <div id="forms">
             <form action="{{ route('item.list') }}" class="form-inline" role="form" method="GET">
-                {{-- @csrf --}}
                 <div class="form-group">
                     <input type="input" class="form-control" id="name" placeholder="item name" autocomplete="off" name="keyword" value="{{ $keyword }}">
                 </div>
