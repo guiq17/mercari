@@ -3,7 +3,6 @@ $(document).ready(function () {
     $('#firstCategory').change(function () {
         // ユーザーが選んだカテゴリーを取得
         var selectedCategory = $(this).val();
-
         // Ajaxリクエストを送信
         $.ajax({
             url: '/getSecondCategories',
@@ -19,7 +18,15 @@ $(document).ready(function () {
                 // 中カテゴリを追加
                 $.each(data.secondCategories, function (_, secondCategory) {
                     secondCategorySelect.append(
-                        $('<option>').text(secondCategory).attr('value', secondCategory)
+                        $('<option>').text(secondCategory.name).attr('value', secondCategory.id)
+                    );
+                });
+                // 同時にthirdCategoryのデータも取得してthirdCategoryに反映
+                var thirdCategorySelect = $('#thirdCategory');
+                thirdCategorySelect.find('option:not(:first-child)').remove();
+                $.each(data.thirdCategories, function (_, thirdCategory) {
+                    thirdCategorySelect.append(
+                        $('<option>').text(thirdCategory.name).attr('value', thirdCategory.id)
                     );
                 });
             }
@@ -36,11 +43,12 @@ $(document).ready(function () {
                 secondCategory: selectedCategory,
             },
             success: function (data) {
+                console.log(data);
                 var thirdCategorySelect = $('#thirdCategory');
                 thirdCategorySelect.find('option:not(:first-child)').remove();
                 $.each(data.thirdCategories, function (_, thirdCategory) {
                     thirdCategorySelect.append(
-                        $('<option>').text(thirdCategory).attr('value', thirdCategory)
+                        $('<option>').text(thirdCategory.name).attr('value', thirdCategory.id)
                     );
                 });
             }

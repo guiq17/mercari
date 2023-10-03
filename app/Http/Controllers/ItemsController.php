@@ -30,24 +30,24 @@ class ItemsController extends Controller
         }
 
         // カテゴリー検索
-        // if(!empty($firstCategory))
-        // {
-        //     $query->whereHas('category', function($query) use($firstCategory) {
-        //         $query->where('name_all', 'like', $firstCategory.'/%');
-        //     });
-        // }
-        // if(!empty($secondCategory))
-        // {
-        //     $query->whereHas('category', function($query) use($secondCategory) {
-        //         $query->where('name_all', 'like', '%/'.$secondCategory.'/%');
-        //     });
-        // }
-        // if(!empty($thirdCategory))
-        // {
-        //     $query->whereHas('category', function($query) use($thirdCategory) {
-        //         $query->where('name_all', 'like', '%/'.$thirdCategory);
-        //     });
-        // }
+        if(!empty($firstCategory))
+        {
+            $query->whereHas('category', function($query) use($firstCategory) {
+                $query->where('name_all', 'like', $firstCategory.'/%');
+            });
+        }
+        if(!empty($secondCategory))
+        {
+            $query->whereHas('category', function($query) use($secondCategory) {
+                $query->where('name_all', 'like', '%/'.$secondCategory.'/%');
+            });
+        }
+        if(!empty($thirdCategory))
+        {
+            $query->whereHas('category', function($query) use($thirdCategory) {
+                $query->where('name_all', 'like', '%/'.$thirdCategory);
+            });
+        }
 
         $items = $query->orderBy('id')->paginate(30);
         if($items->count() < 30){
@@ -77,11 +77,17 @@ class ItemsController extends Controller
     {
         $selectedCategory = $request->input('firstCategory');
 
-        // 選択されたfirstCategoryに紐づくsecondCategoryを取得
-        $secondCategories = Category::where('parent_id', $selectedCategory)->pluck('name')->toArray();
+        // 選択されたfirstCategoryに紐づくsecondCategoryを連想配列で取得
+        $secondCategories = Category::where('parent_id', $selectedCategory)->get(['id', 'name'])->toArray();
+        // 同時にfirstCategoryに紐づくthirdCategoryを取得
+        $firstCategoryName = Category::where('id', $selectedCategory)->value('name');
+        $thirdCategories = Category::whereNotNull('name_all')->where(function ($query) use ($firstCategoryName) {
+            $query->whereRaw("split_part(name_all, '/', 1) = ?", [$firstCategoryName]);
+        })->get(['id', 'name']);
 
         return response()->json([
             'secondCategories' => $secondCategories,
+            'thirdCategories' => $thirdCategories,
         ]);
     }
 
@@ -89,8 +95,8 @@ class ItemsController extends Controller
     {
         $selectedCategory = $request->input('secondCategory');
 
-        // 選択されたsecondCategoryに紐づくthirdCategoryを取得
-        $thirdCategories = Category::where('parent_id', $selectedCategory)->pluck('name')->toArray();
+        // 選択されたsecondCategoryに紐づくthirdCategoryを連想配列で取得
+        $thirdCategories = Category::where('parent_id', $selectedCategory)->get(['id', 'name'])->toArray();
 
         return response()->json([
             'thirdCategories' => $thirdCategories,
