@@ -91,10 +91,10 @@
                     @foreach ($items as $index => $item)
                     <tr>
                         <td class="item-name">
-                            <a href="">{{ $item->name }}</a>
+                            <a href="{{ route('item.detail', ['id' => $item->id]) }}">{{ $item->name }}</a>
                         </td>
                         <td class="item-price">
-                            {{ $item->price }}
+                            {{ number_format($item->price, 1) }}
                         </td>
                         <td class="item-category">
                             <a href="">{{ isset($categories[$index]['firstCategory']) ? $categories[$index]['firstCategory'] : '' }}</a>

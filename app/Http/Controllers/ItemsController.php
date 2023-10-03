@@ -76,6 +76,22 @@ class ItemsController extends Controller
         return view('items.list', compact('items', 'categories', 'firstCategories', 'secondCategories', 'thirdCategories', 'keyword', 'selectedFirstCategory', 'selectedSecondCategory', 'selectedThirdCategory', 'brandKeyword'));
     }
 
+    // 商品詳細画面表示
+    public function detail($id)
+    {
+        $item = Item::find($id);
+        $categories = [];
+        if($item->category){
+            $categoryName = $item->category->getCategoriesAttribute();
+            $categories[] = [
+                'firstCategory' => $categoryName[0],
+                'secondCategory' => $categoryName[1],
+                'thirdCategory' => $categoryName[2],
+            ];
+        }
+        return view('items.detail', compact('item', 'categories'));
+    }
+
     public function getSecondCategories(Request $request)
     {
         $selectedCategory = $request->input('firstCategory');
