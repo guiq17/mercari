@@ -12,9 +12,9 @@ class ItemsController extends Controller
     public function list(Request $request)
     {
         $keyword = $request->input('keyword');
-        $firstCategory = $request->input('firstCategory');
-        $secondCategory = $request->input('secondCategory');
-        $thirdCategory = $request->input('thirdCategory');
+        $selectedFirstCategory = $request->input('firstCategory');
+        $selectedSecondCategory = $request->input('secondCategory');
+        $selectedThirdCategory = $request->input('thirdCategory');
         $brandKeyword = $request->input('brandKeyword');
 
         $query = Item::query();
@@ -30,22 +30,25 @@ class ItemsController extends Controller
         }
 
         // カテゴリー検索
-        if(!empty($firstCategory))
+        if(!empty($selectedFirstCategory))
         {
-            $query->whereHas('category', function($query) use($firstCategory) {
-                $query->where('name_all', 'like', $firstCategory.'/%');
+            $firstCategoryName = Category::where('id', $selectedFirstCategory)->value('name');
+            $query->whereHas('category', function($query) use($firstCategoryName) {
+                $query->whereRaw("split_part(name_all, '/', 1) = ?", [$firstCategoryName]);
             });
         }
-        if(!empty($secondCategory))
+        if(!empty($selectedSecondCategory))
         {
-            $query->whereHas('category', function($query) use($secondCategory) {
-                $query->where('name_all', 'like', '%/'.$secondCategory.'/%');
+            $secondCategoryName = Category::where('id', $selectedSecondCategory)->value('name');
+            $query->whereHas('category', function($query) use($secondCategoryName) {
+                $query->whereRaw("split_part(name_all, '/', 2) = ?", [$secondCategoryName]);
             });
         }
-        if(!empty($thirdCategory))
+        if(!empty($selectedThirdCategory))
         {
-            $query->whereHas('category', function($query) use($thirdCategory) {
-                $query->where('name_all', 'like', '%/'.$thirdCategory);
+            $thirdCategoryName = Category::where('id', $selectedThirdCategory)->value('name');
+            $query->whereHas('category', function($query) use($thirdCategoryName) {
+                $query->whereRaw("split_part(name_all, '/', 3) = ?", [$thirdCategoryName]);
             });
         }
 
@@ -70,7 +73,7 @@ class ItemsController extends Controller
         $secondCategories = Category::where('parent_id', '!=', null)->where('name_all', '=', null)->get();
         $thirdCategories = Category::where('name_all', '!=', null)->get();
 
-        return view('items.list', compact('items', 'categories', 'firstCategories', 'secondCategories', 'thirdCategories', 'keyword', 'firstCategory', 'secondCategory', 'thirdCategory', 'brandKeyword'));
+        return view('items.list', compact('items', 'categories', 'firstCategories', 'secondCategories', 'thirdCategories', 'keyword', 'selectedFirstCategory', 'selectedSecondCategory', 'selectedThirdCategory', 'brandKeyword'));
     }
 
     public function getSecondCategories(Request $request)

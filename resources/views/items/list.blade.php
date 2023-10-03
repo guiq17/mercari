@@ -47,21 +47,21 @@
                     <select name="firstCategory" id="firstCategory" class="form-control">
                         <option value="">- firstCategory -</option>
                         @foreach ($firstCategories as $firstCategory)
-                            <option value="{{ $firstCategory->id }}">{{ $firstCategory->name }}</option>
+                            <option value="{{ $firstCategory->id }}" {{ $firstCategory->id == $selectedFirstCategory ? 'selected' : '' }}>{{ $firstCategory->name }}</option>
                         @endforeach
                     </select>
                     {{-- secondCategoryのプルダウンボックス --}}
                     <select name="secondCategory" id="secondCategory" class="form-control">
                         <option value="">- secondCategory -</option>
                         @foreach ($secondCategories as $secondCategory)
-                            <option value="{{ $secondCategory->id }}">{{ $secondCategory->name }}</option>
+                            <option value="{{ $secondCategory->id }}" {{ $secondCategory->id == $selectedSecondCategory ? 'selected' : '' }}>{{ $secondCategory->name }}</option>
                         @endforeach
                     </select>
                     {{-- thirdCategoryのプルダウンボックス --}}
                     <select name="thirdCategory" id="thirdCategory" class="form-control">
                         <option value="">- thirdCategory -</option>
                         @foreach ($thirdCategories as $thirdCategory)
-                            <option value="{{ $thirdCategory->id }}">{{ $thirdCategory->name }}</option>
+                            <option value="{{ $thirdCategory->id }}" {{ $thirdCategory->id == $selectedThirdCategory ? 'selected' : '' }}>{{ $thirdCategory->name }}</option>
                         @endforeach
                     </select>
                 </div>
