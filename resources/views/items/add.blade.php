@@ -43,12 +43,15 @@
 
         <!-- add form -->
         <form action="#" method="POST" class="form-horizontal">
+            @csrf
             <!-- name -->
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">name</label>
                 <div class="col-sm-8">
                     <input type="text" name="name" class="form-control" id="inputName"/>
-                    <span class="text-danger">error:may not be empty</span>
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <!-- price -->
@@ -56,14 +59,16 @@
                 <label for="price" class="col-sm-2 control-label">price</label>
                 <div class="col-sm-8">
                     <input type="text" name="price" class="form-control" id="price"/>
-                    <span class="text-danger">error:may not be empty</span>
+                    @error('price')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <!-- category -->
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label">category</label>
                 <div class="col-sm-8">
-                    <select class="form-control">
+                    <select class="form-control" name="first_category">
                         <option value="">- firstCategory -</option>
                         @foreach ($firstCategories as $firstCategory)
                             <option value="{{ $firstCategory->id }}">{{ $firstCategory->name }}</option>
@@ -74,7 +79,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control">
+                    <select class="form-control" name="second_category">
                         <option value="">- secondCategory -</option>
                         @foreach ($secondCategories as $secondCategory)
                             <option value="{{ $secondCategory->id }}">{{ $secondCategory->name }}</option>
@@ -85,7 +90,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control">
+                    <select class="form-control" name="third_category">
                         <option value="">- thirdCategory -</option>
                         @foreach ($thirdCategories as $thirdCategory)
                             <option value="{{ $thirdCategory->id }}">{{ $thirdCategory->name }}</option>
@@ -93,18 +98,11 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="category" class="col-sm-2 control-label"></label>
-                <div class="col-sm-8">
-                    <span class="text-danger">error:may not be empty</span>
-                </div>
-            </div>
             <!-- brand -->
             <div class="form-group">
                 <label for="brand" class="col-sm-2 control-label">brand</label>
                 <div class="col-sm-8">
                     <input type="text" id="brand" class="form-control" name="brand"/>
-                    <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
             <!-- condition -->
@@ -112,20 +110,28 @@
                 <label for="condition" class="col-sm-2 control-label">condition</label>
                 <div class="col-sm-8">
                     <label for="condition1" class="radio-inline">
-                        <input type="radio" name="condition" id="condition1" value="1"/> 1
+                        <input type="radio" name="condition_id" id="condition1" value="1"/> 1
                     </label>
                     <label for="condition2" class="radio-inline">
-                        <input type="radio" name="condition" id="condition2" value="2"/> 2
+                        <input type="radio" name="condition_id" id="condition2" value="2"/> 2
                     </label>
                     <label for="condition3" class="radio-inline">
-                        <input type="radio" name="condition" id="condition3" value="3"/> 3
+                        <input type="radio" name="condition_id" id="condition3" value="3"/> 3
+                    </label>
+                    <label for="condition4" class="radio-inline">
+                        <input type="radio" name="condition_id" id="condition4" value="4"/> 4
+                    </label>
+                    <label for="condition5" class="radio-inline">
+                        <input type="radio" name="condition_id" id="condition5" value="5"/> 5
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <span class="text-danger">error:may not be empty</span>
+                    @error('condition_id')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <!-- description -->
@@ -133,7 +139,6 @@
                 <label for="description" class="col-sm-2 control-label">description</label>
                 <div class="col-sm-8">
                     <textarea name="description" id="description" class="form-control" rows="5"></textarea>
-                    <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
             <!-- submit button -->
