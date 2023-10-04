@@ -23,6 +23,7 @@ Route::get('/list', [ItemsController::class, 'list'])->name('item.list');
 Route::get('/getSecondCategories', [ItemsController::class, 'getSecondCategories']);
 Route::get('/getThirdCategories', [ItemsController::class, 'getThirdCategories']);
 Route::get('/list/{id}', [ItemsController::class, 'detail'])->name('item.detail');
+Route::get('/edit/{itemId}/{categoryId}', [ItemsController::class, 'edit'])->name('item.edit');
 
 Route::get('/phpinfo', function () {
     phpinfo();
