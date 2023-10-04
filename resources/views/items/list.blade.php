@@ -31,7 +31,7 @@
     <div id="main" class="container-fluid">
         {{-- addItemlink --}}
         <div id="addItemButton">
-            <a href="" class="btn btn-default">Add New Item</a>
+            <a href="{{ route('item.add') }}" class="btn btn-default">Add New Item</a>
         </div>
         {{-- 検索フォーム --}}
         <div id="forms">

@@ -17,45 +17,46 @@
     <!-- navbar -->
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="./list.html">Rakus Items</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./list.html">Rakus Items</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-        <div>
-            <ul class="nav navbar-nav navbar-right">
-            <li><a id="logout" href="./login.html">Logout&nbsp;<i class="fa fa-power-off"></i></a></li>
-            </ul>
-            <p class="navbar-text navbar-right">
-            <span id="loginName">user: userName</span>
-            </p>
-        </div>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                <li><a id="logout" href="./login.html">Logout&nbsp;<i class="fa fa-power-off"></i></a></li>
+                </ul>
+                <p class="navbar-text navbar-right">
+                <span id="loginName">user: userName</span>
+                </p>
+            </div>
         </div>
     </nav>
 
     <!-- details -->
     <div id="input-main" class="container">
-        <a type="button" class="btn btn-default" href="{{ route('item.detail', ['id' => $item->id]) }}"><i class="fa fa-reply"></i> back</a>
-        <h2>Edit</h2>
+        <a type="button" class="btn btn-default" href="{{ route('item.list') }}"><i class="fa fa-reply"></i> back</a>
+        <h2>Add</h2>
 
-        <!-- edit form -->
+        <!-- add form -->
         <form action="#" method="POST" class="form-horizontal">
-            @csrf
             <!-- name -->
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">name</label>
                 <div class="col-sm-8">
-                    <input type="text" name="name" class="form-control" id="inputName" value="{{ $item->name }}"/>
+                    <input type="text" name="name" class="form-control" id="inputName"/>
+                    <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
             <!-- price -->
             <div class="form-group">
                 <label for="price" class="col-sm-2 control-label">price</label>
                 <div class="col-sm-8">
-                    <input type="text" name="price" class="form-control" id="price" value="${{ number_format($item->price, 1) }}"/>
+                    <input type="text" name="price" class="form-control" id="price"/>
+                    <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
             <!-- category -->
@@ -64,10 +65,8 @@
                 <div class="col-sm-8">
                     <select class="form-control">
                         <option value="">- firstCategory -</option>
-                        @foreach($firstCategories as $firstCategory)
-                            <option value="{{ $firstCategory->id }}" @if($firstCategoryId == $firstCategory->id) selected @endif>
-                                {{ $firstCategory->name }}
-                            </option>
+                        @foreach ($firstCategories as $firstCategory)
+                            <option value="{{ $firstCategory->id }}">{{ $firstCategory->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -77,10 +76,8 @@
                 <div class="col-sm-8">
                     <select class="form-control">
                         <option value="">- secondCategory -</option>
-                        @foreach($secondCategories as $secondCategory)
-                            <option value="{{ $secondCategory->id }}" @if($secondCategoryId == $secondCategory->id) selected @endif>
-                                {{ $secondCategory->name }}
-                            </option>
+                        @foreach ($secondCategories as $secondCategory)
+                            <option value="{{ $secondCategory->id }}">{{ $secondCategory->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -90,19 +87,24 @@
                 <div class="col-sm-8">
                     <select class="form-control">
                         <option value="">- thirdCategory -</option>
-                        @foreach($thirdCategories as $thirdCategory)
-                            <option value="{{ $thirdCategory->id }}" @if($thirdCategoryId == $thirdCategory->id) selected @endif>
-                                {{ $thirdCategory->name }}
-                            </option>
+                        @foreach ($thirdCategories as $thirdCategory)
+                            <option value="{{ $thirdCategory->id }}">{{ $thirdCategory->name }}</option>
                         @endforeach
                     </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="category" class="col-sm-2 control-label"></label>
+                <div class="col-sm-8">
+                    <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
             <!-- brand -->
             <div class="form-group">
                 <label for="brand" class="col-sm-2 control-label">brand</label>
                 <div class="col-sm-8">
-                    <input type="text" id="brand" class="form-control" name="brand" value="{{ $item->brand }}"/>
+                    <input type="text" id="brand" class="form-control" name="brand"/>
+                    <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
             <!-- condition -->
@@ -110,27 +112,28 @@
                 <label for="condition" class="col-sm-2 control-label">condition</label>
                 <div class="col-sm-8">
                     <label for="condition1" class="radio-inline">
-                        <input type="radio" name="condition" id="condition1" value="1" {{ $item->condition_id == 1 ? 'checked' : ''}}/> 1
+                        <input type="radio" name="condition" id="condition1" value="1"/> 1
                     </label>
                     <label for="condition2" class="radio-inline">
-                        <input type="radio" name="condition" id="condition2" value="2" {{ $item->condition_id == 2 ? 'checked' : ''}}/> 2
+                        <input type="radio" name="condition" id="condition2" value="2"/> 2
                     </label>
                     <label for="condition3" class="radio-inline">
-                        <input type="radio" name="condition" id="condition3" value="3" {{ $item->condition_id == 3 ? 'checked' : ''}}/> 3
+                        <input type="radio" name="condition" id="condition3" value="3"/> 3
                     </label>
-                    <label for="condition4" class="radio-inline">
-                        <input type="radio" name="condition" id="condition4" value="4" {{ $item->condition_id == 4 ? 'checked' : ''}}/> 4
-                    </label>
-                    <label for="condition5" class="radio-inline">
-                        <input type="radio" name="condition" id="condition5" value="5" {{ $item->condition_id == 5 ? 'checked' : ''}}/> 5
-                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="category" class="col-sm-2 control-label"></label>
+                <div class="col-sm-8">
+                    <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
             <!-- description -->
             <div class="form-group">
                 <label for="description" class="col-sm-2 control-label">description</label>
                 <div class="col-sm-8">
-                    <textarea name="description" id="description" class="form-control" rows="5">{{ $item->description }}</textarea>
+                    <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+                    <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
             <!-- submit button -->
