@@ -27,6 +27,7 @@ Route::get('/getSecondCategories', [CategoryController::class, 'getSecondCategor
 Route::get('/getThirdCategories', [CategoryController::class, 'getThirdCategories']);
 Route::get('/list/{id}', [ItemsController::class, 'detail'])->name('item.detail');
 Route::get('/edit/{itemId}', [ItemEditController::class, 'edit'])->name('item.edit');
+Route::get('/items/{id}', [ItemEditController::class, 'destroy'])->name('item.delete');
 
 Route::get('/add', [ItemAddController::class, 'add'])->name('item.add');
 Route::post('/create', [ItemAddController::class, 'create'])->name('item.create');

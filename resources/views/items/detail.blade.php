@@ -11,32 +11,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
         integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{ asset('css/mercari.css')}}"/>
-    <!-- script -->
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
     <title>Rakus Items</title>
 </head>
 <body>
     <!-- navbar -->
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="./list.html">Rakus Items</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./list.html">Rakus Items</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-        <div>
-            <ul class="nav navbar-nav navbar-right">
-            <li><a id="logout" href="./login.html">Logout&nbsp;<i class="fa fa-power-off"></i></a></li>
-            </ul>
-            <p class="navbar-text navbar-right">
-            <span id="loginName">user: userName</span>
-            </p>
-        </div>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a id="logout" href="./login.html">Logout&nbsp;<i class="fa fa-power-off"></i></a></li>
+                </ul>
+                <p class="navbar-text navbar-right">
+                    <span id="loginName">user: userName</span>
+                </p>
+            </div>
         </div>
     </nav>
 
@@ -91,7 +87,16 @@
                 </tbody>
             </table>
             <a type="button" class="btn btn-default" href="{{ route('item.edit', ['itemId' => $item->id]) }}"><i class="fa fa-pencil-square-o"></i>&nbsp;edit</a>
+            <a type="button" class="btn btn-default" id="deleteBtn" href="{{ route('item.delete', ['id' => $item->id]) }}"><i class="fa fa-pencil-square-o"></i>&nbsp;delete</a>
         </div>
     </div>
+
+    <script>
+        var itemId = {{ $item->id }};
+        var itemDeleteRoute = "{{ route('item.delete', ['id' => ':itemId']) }}".replace(':itemId', itemId);
+        var itemListRoute = "{{ route('item.list') }}";
+    </script>
+
+    <script src="{{ asset('js/deleteItem.js') }}"></script>
 </body>
 </html>

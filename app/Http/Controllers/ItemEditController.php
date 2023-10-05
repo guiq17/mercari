@@ -23,6 +23,10 @@ class ItemEditController extends Controller
             ];
         }
 
+        $firstCategoryId = null;
+        $secondCategoryId = null;
+        $thirdCategoryId = null;
+
         foreach($categories as $category){
             $firstCategoryName = $category['firstCategory'];
             $secondCategoryName = $category['secondCategory'];
@@ -49,5 +53,18 @@ class ItemEditController extends Controller
     public function update(Request $request, $itemId)
     {
         $name = $request->input('name');
+    }
+
+    public function destroy($id)
+    {
+        $item = Item::find($id);
+
+        if(!$item){
+            return redirect()->route('item.list')->with('error', '商品が見つかりませんでした。');
+        }
+
+        $item->delete();
+
+        return redirect()->route('item.list')->with('success', '商品が削除されました。');
     }
 }
