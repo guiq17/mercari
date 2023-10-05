@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ItemEditController;
 use App\Http\Controllers\ItemAddController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,8 @@ Route::get('/', function () {
 
 
 Route::get('/list', [ItemsController::class, 'list'])->name('item.list');
-Route::get('/getSecondCategories', [ItemsController::class, 'getSecondCategories']);
-Route::get('/getThirdCategories', [ItemsController::class, 'getThirdCategories']);
+Route::get('/getSecondCategories', [CategoryController::class, 'getSecondCategories']);
+Route::get('/getThirdCategories', [CategoryController::class, 'getThirdCategories']);
 Route::get('/list/{id}', [ItemsController::class, 'detail'])->name('item.detail');
 Route::get('/edit/{itemId}', [ItemEditController::class, 'edit'])->name('item.edit');
 

@@ -42,7 +42,7 @@
         <h2>Add</h2>
 
         <!-- add form -->
-        <form action="#" method="POST" class="form-horizontal">
+        <form action="{{ route('item.create') }}" method="POST" class="form-horizontal">
             @csrf
             <!-- name -->
             <div class="form-group">
@@ -68,7 +68,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label">category</label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="first_category">
+                    <select class="form-control" name="firstCategory" id="firstCategory">
                         <option value="">- firstCategory -</option>
                         @foreach ($firstCategories as $firstCategory)
                             <option value="{{ $firstCategory->id }}">{{ $firstCategory->name }}</option>
@@ -79,7 +79,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="second_category">
+                    <select class="form-control" name="secondCategory" id="secondCategory">
                         <option value="">- secondCategory -</option>
                         @foreach ($secondCategories as $secondCategory)
                             <option value="{{ $secondCategory->id }}">{{ $secondCategory->name }}</option>
@@ -90,7 +90,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="third_category">
+                    <select class="form-control" name="thirdCategory" id="thirdCategory">
                         <option value="">- thirdCategory -</option>
                         @foreach ($thirdCategories as $thirdCategory)
                             <option value="{{ $thirdCategory->id }}">{{ $thirdCategory->name }}</option>
@@ -149,5 +149,7 @@
             </div>
         </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/getCategory.js') }}"></script>
 </body>
 </html>

@@ -52,42 +52,42 @@
             @endif
             <table class="table table-hover">
                 <tbody>
-                <tr>
-                    <th>ID</th>
-                    <td>{{ $item->id }}</td>
-                </tr>
-                <tr>
-                    <th>name</th>
-                    <td>{{ $item->name }}</td>
-                </tr>
-                <tr>
-                    <th>price</th>
-                    <td>${{ number_format($item->price, 1) }}</td>
-                </tr>
-                <tr>
-                    <th>category</th>
-                    <td>
-                        @foreach($categories as $category)
-                            {{ $category['firstCategory'] }}
-                            /
-                            {{ $category['secondCategory'] }}
-                            /
-                            {{ $category['thirdCategory'] }}
-                        @endforeach
-                    </td>
-                </tr>
-                <tr>
-                    <th>brand</th>
-                    <td>{{ $item->brand }}</td>
-                </tr>
-                <tr>
-                    <th>condition</th>
-                    <td>{{ $item->condition_id }}</td>
-                </tr>
-                <tr>
-                    <th>description</th>
-                    <td>{{ $item->description }}</td>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ $item->id }}</td>
+                    </tr>
+                    <tr>
+                        <th>name</th>
+                        <td>{{ $item->name }}</td>
+                    </tr>
+                    <tr>
+                        <th>price</th>
+                        <td>${{ number_format($item->price, 1) }}</td>
+                    </tr>
+                    <tr>
+                        <th>category</th>
+                        <td>
+                            @foreach($categories as $category)
+                                {{ $category['firstCategory'] }}
+                                /
+                                {{ $category['secondCategory'] }}
+                                /
+                                {{ $category['thirdCategory'] }}
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>brand</th>
+                        <td>{{ $item->brand }}</td>
+                    </tr>
+                    <tr>
+                        <th>condition</th>
+                        <td>{{ $item->condition_id }}</td>
+                    </tr>
+                    <tr>
+                        <th>description</th>
+                        <td>{{ $item->description }}</td>
+                    </tr>
                 </tbody>
             </table>
             <a type="button" class="btn btn-default" href="{{ route('item.edit', ['itemId' => $item->id]) }}"><i class="fa fa-pencil-square-o"></i>&nbsp;edit</a>
