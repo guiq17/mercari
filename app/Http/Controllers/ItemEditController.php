@@ -57,9 +57,19 @@ class ItemEditController extends Controller
         $data = $request->only(['name', 'price', 'thirdCategory', 'brand', 'condition_id', 'description']);
         unset($data['_token']);
 
+        // thirdCAtegoryのidを取得
+        $category_id = $data['thirdCategory'];
+
         // データベースを更新
         $item = Item::find($id);
-        $item->update($data);
+        $item->update([
+            'name' => $data['name'],
+            'price' => $data['price'],
+            'category_name' => $category_id,
+            'brand' => $data['brand'],
+            'condition_id' => $data['condition_id'],
+            'description' => $data['description'],
+        ]);
 
         // 成功メッセージをフラッシュ
         session()->flash('success', '商品が更新されました。');
@@ -73,9 +83,9 @@ class ItemEditController extends Controller
         $item = Item::find($id);
 
         if(!$item){
-            return redirect()->route('item.list')->with('error', '商品が見つかりませんでした。');
+            return redirect()->route('item.list');
         }
-
+        
         $item->delete();
 
         return redirect()->route('item.list')->with('success', '商品が削除されました。');

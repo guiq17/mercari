@@ -42,7 +42,7 @@
         <a type="button" class="btn btn-default" href="{{ route('item.list') }}"><i class="fa fa-reply"></i> back to top</a>
         <h2>Edit</h2>
         @if(session('success'))
-            <div class="alert-success">
+            <div class="alert">
                 {{ session('success') }}
             </div>
         @endif
@@ -74,7 +74,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label">category</label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="firstCategory">
+                    <select class="form-control" name="firstCategory" id="firstCategory">
                         <option value="">- firstCategory -</option>
                         @foreach($firstCategories as $firstCategory)
                             <option value="{{ $firstCategory->id }}" @if($firstCategoryId == $firstCategory->id) selected @endif>
@@ -87,7 +87,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="secondCategory">
+                    <select class="form-control" name="secondCategory" id="secondCategory">
                         <option value="">- secondCategory -</option>
                         @foreach($secondCategories as $secondCategory)
                             <option value="{{ $secondCategory->id }}" @if($secondCategoryId == $secondCategory->id) selected @endif>
@@ -100,7 +100,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="thirdCategory">
+                    <select class="form-control" name="thirdCategory" id="thirdCategory">
                         <option value="">- thirdCategory -</option>
                         @foreach($thirdCategories as $thirdCategory)
                             <option value="{{ $thirdCategory->id }}" @if($thirdCategoryId == $thirdCategory->id) selected @endif>
@@ -156,5 +156,7 @@
             </div>
         </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/getCategory.js') }}"></script>
 </body>
 </html>

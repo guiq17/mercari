@@ -74,6 +74,11 @@
                 <div class="form-group"></div>
                 <button type="submit" class="btn btn-default">search</button>
             </form>
+            @if(session('success'))
+                <div class="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
         </div>
         {{-- table --}}
         <div class="table-responsive">

@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::get('/list', [ItemsController::class, 'list'])->name('item.list');
 Route::get('/getSecondCategories', [CategoryController::class, 'getSecondCategories']);
 Route::get('/getThirdCategories', [CategoryController::class, 'getThirdCategories']);
-Route::get('/list/{id}', [ItemsController::class, 'detail'])->name('item.detail');
+Route::get('/detail/{id}', [ItemsController::class, 'detail'])->name('item.detail');
 Route::get('/edit/{id}', [ItemEditController::class, 'edit'])->name('item.edit');
 Route::post('update/{id}', [ItemEditController::class, 'update'])->name('item.update');
 Route::delete('/items/{id}', [ItemEditController::class, 'destroy'])->name('item.delete');
