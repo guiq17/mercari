@@ -26,8 +26,9 @@ Route::get('/list', [ItemsController::class, 'list'])->name('item.list');
 Route::get('/getSecondCategories', [CategoryController::class, 'getSecondCategories']);
 Route::get('/getThirdCategories', [CategoryController::class, 'getThirdCategories']);
 Route::get('/list/{id}', [ItemsController::class, 'detail'])->name('item.detail');
-Route::get('/edit/{itemId}', [ItemEditController::class, 'edit'])->name('item.edit');
-Route::get('/items/{id}', [ItemEditController::class, 'destroy'])->name('item.delete');
+Route::get('/edit/{id}', [ItemEditController::class, 'edit'])->name('item.edit');
+Route::post('update/{id}', [ItemEditController::class, 'update'])->name('item.update');
+Route::delete('/items/{id}', [ItemEditController::class, 'destroy'])->name('item.delete');
 
 Route::get('/add', [ItemAddController::class, 'add'])->name('item.add');
 Route::post('/create', [ItemAddController::class, 'create'])->name('item.create');

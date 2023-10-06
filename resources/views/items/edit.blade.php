@@ -39,30 +39,42 @@
     <!-- details -->
     <div id="input-main" class="container">
         <a type="button" class="btn btn-default" href="{{ route('item.detail', ['id' => $item->id]) }}"><i class="fa fa-reply"></i> back</a>
+        <a type="button" class="btn btn-default" href="{{ route('item.list') }}"><i class="fa fa-reply"></i> back to top</a>
         <h2>Edit</h2>
+        @if(session('success'))
+            <div class="alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <!-- edit form -->
-        <form action="#" method="POST" class="form-horizontal">
+        <form action="{{ route('item.update', ['id' => $item->id]) }}" method="POST" class="form-horizontal">
             @csrf
             <!-- name -->
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">name</label>
                 <div class="col-sm-8">
-                    <input type="text" name="name" class="form-control" id="inputName" value="{{ $item->name }}"/>
+                    <input type="text" name="name" class="form-control" id="inputName" value="{{ $item->name }}" autocomplete="off"/>
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <!-- price -->
             <div class="form-group">
                 <label for="price" class="col-sm-2 control-label">price</label>
                 <div class="col-sm-8">
-                    <input type="text" name="price" class="form-control" id="price" value="${{ number_format($item->price, 1) }}"/>
+                    <input type="text" name="price" class="form-control" id="price" value="{{ $item->price }}" autocomplete="off"/>
+                    @error('price')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <!-- category -->
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label">category</label>
                 <div class="col-sm-8">
-                    <select class="form-control">
+                    <select class="form-control" name="firstCategory">
                         <option value="">- firstCategory -</option>
                         @foreach($firstCategories as $firstCategory)
                             <option value="{{ $firstCategory->id }}" @if($firstCategoryId == $firstCategory->id) selected @endif>
@@ -75,7 +87,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control">
+                    <select class="form-control" name="secondCategory">
                         <option value="">- secondCategory -</option>
                         @foreach($secondCategories as $secondCategory)
                             <option value="{{ $secondCategory->id }}" @if($secondCategoryId == $secondCategory->id) selected @endif>
@@ -88,7 +100,7 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control">
+                    <select class="form-control" name="thirdCategory">
                         <option value="">- thirdCategory -</option>
                         @foreach($thirdCategories as $thirdCategory)
                             <option value="{{ $thirdCategory->id }}" @if($thirdCategoryId == $thirdCategory->id) selected @endif>
@@ -102,7 +114,7 @@
             <div class="form-group">
                 <label for="brand" class="col-sm-2 control-label">brand</label>
                 <div class="col-sm-8">
-                    <input type="text" id="brand" class="form-control" name="brand" value="{{ $item->brand }}"/>
+                    <input type="text" id="brand" class="form-control" name="brand" value="{{ $item->brand }}" autocomplete="off"/>
                 </div>
             </div>
             <!-- condition -->
@@ -110,20 +122,23 @@
                 <label for="condition" class="col-sm-2 control-label">condition</label>
                 <div class="col-sm-8">
                     <label for="condition1" class="radio-inline">
-                        <input type="radio" name="condition" id="condition1" value="1" {{ $item->condition_id == 1 ? 'checked' : ''}}/> 1
+                        <input type="radio" name="condition_id" id="condition1" value="1" {{ $item->condition_id == 1 ? 'checked' : ''}}/> 1
                     </label>
                     <label for="condition2" class="radio-inline">
-                        <input type="radio" name="condition" id="condition2" value="2" {{ $item->condition_id == 2 ? 'checked' : ''}}/> 2
+                        <input type="radio" name="condition_id" id="condition2" value="2" {{ $item->condition_id == 2 ? 'checked' : ''}}/> 2
                     </label>
                     <label for="condition3" class="radio-inline">
-                        <input type="radio" name="condition" id="condition3" value="3" {{ $item->condition_id == 3 ? 'checked' : ''}}/> 3
+                        <input type="radio" name="condition_id" id="condition3" value="3" {{ $item->condition_id == 3 ? 'checked' : ''}}/> 3
                     </label>
                     <label for="condition4" class="radio-inline">
-                        <input type="radio" name="condition" id="condition4" value="4" {{ $item->condition_id == 4 ? 'checked' : ''}}/> 4
+                        <input type="radio" name="condition_id" id="condition4" value="4" {{ $item->condition_id == 4 ? 'checked' : ''}}/> 4
                     </label>
                     <label for="condition5" class="radio-inline">
-                        <input type="radio" name="condition" id="condition5" value="5" {{ $item->condition_id == 5 ? 'checked' : ''}}/> 5
+                        <input type="radio" name="condition_id" id="condition5" value="5" {{ $item->condition_id == 5 ? 'checked' : ''}}/> 5
                     </label>
+                    @error('condition_id')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <!-- description -->

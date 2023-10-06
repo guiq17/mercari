@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Category;
+use App\Http\Requests\ItemRequest;
 
 class ItemEditController extends Controller
 {
     // 編集ページの表示
-    public function edit($itemId)
+    public function edit($id)
     {
-        $item = Item::find($itemId);
+        $item = Item::find($id);
 
         $categories = [];
         if($item->category){
@@ -50,9 +51,21 @@ class ItemEditController extends Controller
         return view('items.edit', compact('item', 'categories', 'firstCategoryId', 'secondCategoryId', 'thirdCategoryId', 'firstCategories', 'secondCategories', 'thirdCategories'));
     }
 
-    public function update(Request $request, $itemId)
+    public function update(ItemRequest $request, $id)
     {
-        $name = $request->input('name');
+        // フォームデータを取得
+        $data = $request->only(['name', 'price', 'thirdCategory', 'brand', 'condition_id', 'description']);
+        unset($data['_token']);
+
+        // データベースを更新
+        $item = Item::find($id);
+        $item->update($data);
+
+        // 成功メッセージをフラッシュ
+        session()->flash('success', '商品が更新されました。');
+
+        // 編集画面にリダイレクト
+        return redirect()->route('item.edit', ['id' => $id]);
     }
 
     public function destroy($id)

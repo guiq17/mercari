@@ -114,25 +114,6 @@
                 </tbody>
             </table>
         </div>
-        {{-- pagination --}}
-        <div class="pages">
-            {{-- ページ番号を検索して表示するフォーム --}}
-            <div id="select-page">
-                <form action="" class="form-inline">
-                    <div class="form-group">
-                        <div class="input-group col-xs-6">
-                            <label></label>
-                            <input type="text" class="form-control">
-                            {{-- 総ページ数 --}}
-                            <div class="input-group-addon">/ 20</div>
-                        </div>
-                        <div class="input-group col-xs-1">
-                            <button type="submit" class="btn btn-default">Go</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
         {{ $items->appends(request()->query())->links() }}
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

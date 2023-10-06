@@ -48,7 +48,7 @@
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">name</label>
                 <div class="col-sm-8">
-                    <input type="text" name="name" class="form-control" id="inputName"/>
+                    <input type="text" name="name" class="form-control" id="inputName" autocomplete="off"/>
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -58,7 +58,7 @@
             <div class="form-group">
                 <label for="price" class="col-sm-2 control-label">price</label>
                 <div class="col-sm-8">
-                    <input type="text" name="price" class="form-control" id="price"/>
+                    <input type="text" name="price" class="form-control" id="price" autocomplete="off"/>
                     @error('price')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -102,7 +102,7 @@
             <div class="form-group">
                 <label for="brand" class="col-sm-2 control-label">brand</label>
                 <div class="col-sm-8">
-                    <input type="text" id="brand" class="form-control" name="brand"/>
+                    <input type="text" id="brand" class="form-control" name="brand" autocomplete="off"/>
                 </div>
             </div>
             <!-- condition -->

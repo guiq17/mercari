@@ -86,8 +86,14 @@
                     </tr>
                 </tbody>
             </table>
-            <a type="button" class="btn btn-default" href="{{ route('item.edit', ['itemId' => $item->id]) }}"><i class="fa fa-pencil-square-o"></i>&nbsp;edit</a>
-            <a type="button" class="btn btn-default" id="deleteBtn" href="{{ route('item.delete', ['id' => $item->id]) }}"><i class="fa fa-pencil-square-o"></i>&nbsp;delete</a>
+            <a type="button" class="btn btn-default" href="{{ route('item.edit', ['id' => $item->id]) }}"><i class="fa fa-pencil-square-o"></i>&nbsp;edit</a>
+            <form action="{{ route('item.delete', ['id' => $item->id]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-default" id="deleteBtn">
+                    <i class="fa fa-pencil-square-o"></i>&nbsp;delete
+                </button>
+            </form>
         </div>
     </div>
 
