@@ -39,7 +39,7 @@
     <!-- details -->
     <div id="input-main" class="container">
         <a type="button" class="btn btn-default" href="{{ route('item.detail', ['id' => $item->id]) }}"><i class="fa fa-reply"></i> back</a>
-        <a type="button" class="btn btn-default" href="{{ route('item.list') }}"><i class="fa fa-reply"></i> back to top</a>
+        <a type="button" class="btn btn-default" href="{{ $previousPage }}"><i class="fa fa-reply"></i> back to top</a>
         <h2>Edit</h2>
         @if(session('success'))
             <div class="alert">

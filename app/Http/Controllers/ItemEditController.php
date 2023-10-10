@@ -48,7 +48,10 @@ class ItemEditController extends Controller
         $secondCategories = Category::where('parent_id', '!=', null)->where('name_all', '=', null)->get();
         $thirdCategories = Category::where('name_all', '!=', null)->get();
 
-        return view('items.edit', compact('item', 'categories', 'firstCategoryId', 'secondCategoryId', 'thirdCategoryId', 'firstCategories', 'secondCategories', 'thirdCategories'));
+        // セッションから前のページのurlを取得
+        $previousPage = session()->get('previous_page');
+
+        return view('items.edit', compact('item', 'categories', 'firstCategoryId', 'secondCategoryId', 'thirdCategoryId', 'firstCategories', 'secondCategories', 'thirdCategories', 'previousPage'));
     }
 
     public function update(ItemRequest $request, $id)
@@ -83,11 +86,13 @@ class ItemEditController extends Controller
         $item = Item::find($id);
 
         if(!$item){
-            return redirect()->route('item.list');
+            return redirect()->route('item.list')->with('error', '商品が見つかりませんでした。');
         }
-        
+
+        $pageNumber = session('previous_page', 1);
+
         $item->delete();
 
-        return redirect()->route('item.list')->with('success', '商品が削除されました。');
+        return redirect()->route('item.list', ['page' => $pageNumber])->with('success', '商品が削除されました。');
     }
 }

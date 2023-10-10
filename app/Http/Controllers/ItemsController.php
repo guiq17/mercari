@@ -91,6 +91,11 @@ class ItemsController extends Controller
             ];
         }
 
-        return view('items.detail', compact('item', 'categories'));
+        $pageNumber = request('page');
+
+        // 前のページのurlをセッションに保存
+        session()->put('previous_page', url()->previous());
+
+        return view('items.detail', compact('item', 'categories', 'pageNumber'));
     }
 }

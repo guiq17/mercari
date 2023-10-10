@@ -96,7 +96,7 @@
                     @foreach ($items as $index => $item)
                     <tr>
                         <td class="item-name">
-                            <a href="{{ route('item.detail', ['id' => $item->id]) }}">{{ $item->name }}</a>
+                            <a href="{{ route('item.detail', ['id' => $item->id, 'page' => $items->currentPage()]) }}">{{ $item->name }}</a>
                         </td>
                         <td class="item-price">
                             {{ number_format($item->price, 1) }}
